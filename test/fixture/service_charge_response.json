@@ -1,0 +1,14 @@
+{
+  "message": null,
+  "fintech_no": 33,
+  "pay_amount": 1.0,
+  "pgw_charge": 0.01,
+  "service_no": 6001001,
+  "merchant_id": "OIS82990000",
+  "merchant_no": 44,
+  "service_name": "Visa",
+  "service_type": "P",
+  "charge_amount": 0.02,
+  "fintech_charge": 0.01,
+  "merchant_short_name": "OIS"
+}

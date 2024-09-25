@@ -1,0 +1,38 @@
+{
+  "currency": "BDT",
+  "order_id": "MER20240424141813",
+  "return_url": "https://your_return_url",
+  "description": "test",
+  "merchant_id": "OIS82990000",
+  "merchant_no": "0000044",
+  "order_amount": 1.0,
+  "merchant_logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/17045536-bc12-4281-8bf7-8e4ee25e172e.png",
+  "session_start_time": "2024-08-27 16:09:49",
+  "session_end_time": "2024-08-27 16:19:49",
+  "services": {
+    "banks": [
+      {
+        "service_name": "Visa",
+        "service_no": 6001001,
+        "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/12bf1b07-cef4-4d3b-adf4-81c049b0c1cb.png"
+      },
+      {
+        "service_name": "Master",
+        "service_no": 6001003,
+        "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/c1e82fd4-9df8-40bf-bd19-8e12f4b0b218.png"
+      }
+    ],
+    "mfs": [
+      {
+        "service_name": "Nagad",
+        "service_no": 6001005,
+        "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/d48d431a-51a2-4542-881b-a116ae6630c6.png"
+      },
+      {
+        "service_name": "Bkash",
+        "service_no": 6001006,
+        "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/4250ceab-22ff-4566-8797-4b3e5dad6181.png"
+      }
+    ]
+  }
+}

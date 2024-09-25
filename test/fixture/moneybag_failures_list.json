@@ -1,0 +1,31 @@
+[
+  {
+    "status": "FAILED",
+    "status_code": "CS400",
+    "message": "Amount surpasses limit",
+    "data": null
+  },
+
+  {
+    "status": "FAILED",
+    "status_code": 400,
+    "message": "Email or Phone Number Required",
+    "data": null
+  },
+
+  {
+    "status": "FAILED",
+    "status_code": 400,
+    "message": "Invalid phone number. Please provide a valid Bangladesh phone number.",
+    "data": null
+  },
+  {
+    "status": "FAILED",
+    "message": "Session Created Failed"
+  },
+
+  {
+    "status": "FAILED",
+    "message": "You Are Unauthorized !"
+  }
+]
