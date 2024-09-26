@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../domain/moneybag_repo.dart';
-import '../../domain/provider_payload.dart';
-import '../../domain/seassion_info.dart';
-import '../../domain/service_charge_response.dart';
+import '../domain/moneybag_repo.dart';
+import '../domain/payment_method_success_pattern_mixin.dart';
+import '../domain/provider_payload.dart';
+import '../domain/seassion_info.dart';
+import '../domain/service_charge_response.dart';
 
 class PaymentWebviewPage extends StatefulWidget {
   const PaymentWebviewPage._({
@@ -70,6 +71,7 @@ class _PaymentWebviewPageState extends State<PaymentWebviewPage> {
                 return _PaymentProviderView(
                   uri: data.$1!,
                   serviceName: widget.selectedMethod.serviceName,
+                  returnUrl: widget.sessionInfo.returnUrl,
                 );
               }
               view = Text(data.$2 ?? "failed");
@@ -88,46 +90,46 @@ class _PaymentProviderView extends StatefulWidget {
     super.key,
     required this.serviceName,
     required this.uri,
+    required this.returnUrl,
   });
 
   final String serviceName;
   final Uri uri;
+  final String returnUrl;
 
   @override
   State<_PaymentProviderView> createState() => _PaymentProviderViewState();
 }
 
-class _PaymentProviderViewState extends State<_PaymentProviderView> {
+class _PaymentProviderViewState extends State<_PaymentProviderView> with PaymentMethodUrlPattern {
   @override
   void initState() {
     super.initState();
-    print("webiew ${widget.uri}");
   }
 
-  late final controller = WebViewController()
+  late final WebViewController controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..setBackgroundColor(Colors.transparent)
     ..setNavigationDelegate(
       NavigationDelegate(
-        onProgress: (int progress) {
-          print("webiew ${progress}");
-        },
-        onPageStarted: (String url) {
-          print("webiew onPageStarted ${url}");
-        },
+        onProgress: (int progress) {},
+        onPageStarted: (String url) {},
         onPageFinished: (String url) {
-          print("webiew onPageFinished ${url}");
+          debugPrint("webiew onPageFinished ${url}");
+          final onComplete = onPaymentComplete(widget.returnUrl, url);
+          if (onComplete != null) {
+            ///I just want to pass true
+            debugPrint("payment success");
+            Navigator.of(context).pop(onComplete);
+          }
         },
         onHttpError: (HttpResponseError error) {
-          print("webiew HttpResponseError ${error.toString()}");
+          debugPrint("webiew HttpResponseError ${error.toString()}");
         },
         onWebResourceError: (WebResourceError error) {
-          print("webiew onWebResourceError ${error.toString()}");
+          debugPrint("webiew onWebResourceError ${error.toString()}");
         },
-        onNavigationRequest: (NavigationRequest request) {
-          // if (request.url.startsWith('https://www.youtube.com/')) {
-          //   return NavigationDecision.prevent;
-          // }
+        onNavigationRequest: (NavigationRequest request) async {
           return NavigationDecision.navigate;
         },
       ),

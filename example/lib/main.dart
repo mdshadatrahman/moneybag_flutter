@@ -48,23 +48,13 @@ class MainApp extends StatelessWidget {
           authKey: authKey, // "YOUR_AUTH_KEY",
           orderId: "MER20240424141813", //YOUR_ORDER_ID ,
           currencyCode: "050",
-          orderAmount: 1020.0,
+          orderAmount: 1.0,
           description: "Order Description",
           returnURL: "https://your_return_url",
           
         );
 
-        // final ss = await MoneybagRepository.createSession(info);
-        // final re = await MoneybagRepository.serviceCharge(
-        //   amount: info.orderAmount,
-        //   description: info.description,
-        //   merchantId: merchantId,
-        //   serviceNo: "6001006",
-        // );
-
-        // final sInfo = await MoneybagRepository.sessionInfo(ss.success!.sessionId);
-
-        // print("sInfo!.merchantNo ${sInfo!.merchantNo}");
+        
         Navigator.of(context).push(MoneybagPage.route(moneybagInfo: info));
 
         // print(pg);

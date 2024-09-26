@@ -80,7 +80,15 @@ class _MoneyBagSessionViewState extends State<MoneyBagSessionView> {
       sessionInfo: session,
       selectedMethod: selectedMethod!,
     );
-    Navigator.of(context).push(route);
+    final onCompleteResult = await Navigator.of(context).push(route);
+    print("isSuccess $onCompleteResult");
+
+    if (onCompleteResult?.$1 == "APPROVED") {
+      Navigator.maybeOf(context)?.pop();
+    } else {
+      SnackBar snackBar = SnackBar(content: Text("${onCompleteResult?.$1}: ${onCompleteResult?.$2}"));
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(snackBar);
+    }
   }
 
   @override
