@@ -12,7 +12,7 @@ const merchantId = String.fromEnvironment("merchant_id");
 const authKey = String.fromEnvironment("auth_key");
 
 class _InputFormViewState extends State<InputFormView> {
-  late  var info = const MoneybagInfo(
+  late var info = const MoneybagInfo(
     isDev: true,
     email: "",
     phoneNo: "",
@@ -95,6 +95,18 @@ class _InputFormViewState extends State<InputFormView> {
                     return "description should be over 10 char";
                   }
                   return null;
+                },
+              ),
+              const SizedBox(height: 24),
+              SegmentedButton(
+                segments: const [
+                  ButtonSegment(value: true, label: Text("Dev")),
+                  ButtonSegment(value: false, label: Text("Prod")),
+                ],
+                selected: {info.isDev},
+                onSelectionChanged: (p0) {
+                  info = info.copyWith(isDev: p0.first);
+                  setState(() {});
                 },
               ),
               const SizedBox(height: 24),

@@ -86,6 +86,7 @@ class MoneybagInfo {
   String toJson() => json.encode(toMap());
 
   MoneybagInfo copyWith({
+    bool? isDev,
     String? merchantID,
     String? authKey,
     String? orderId,
@@ -97,7 +98,7 @@ class MoneybagInfo {
     String? phoneNo,
   }) {
     return MoneybagInfo(
-      isDev: isDev,
+      isDev: isDev ?? this.isDev,
       merchantID: merchantID ?? this.merchantID,
       authKey: authKey ?? this.authKey,
       orderId: orderId ?? this.orderId,

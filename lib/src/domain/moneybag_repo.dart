@@ -9,10 +9,12 @@ import 'service_charge_response.dart';
 
 class MoneybagRepository {
   ///
+  @Deprecated("Refactor the static method to methods")
+  static bool _isDevMode = true;
 
   static final Uri _baseUri = Uri(
     scheme: "https",
-    host: "dev-api.moneybag.com.bd",
+    host: "${_isDevMode ? "dev-" : ""}api.moneybag.com.bd",
     path: "/api/v1/",
   );
 
@@ -21,6 +23,7 @@ class MoneybagRepository {
   static Future<MoneybagResponse> createSession(MoneybagInfo moneybagInfo) async {
     try {
       final uri = _mergeUriPath("sessions/create-session");
+      _isDevMode = moneybagInfo.isDev;
 
       final response = await http.post(
         uri,
@@ -107,7 +110,7 @@ class MoneybagRepository {
       if (data['status'] == false) {
         return (null, data['message']?.toString() ?? "Something went wrong");
       }
-      print("response ${data}");
+
       if (data['status'] == "SUCCESS") {
         final getWay = data['data']['gateway'];
 
@@ -141,13 +144,14 @@ class MoneybagRepository {
   }
 
   static Future<(Uri? url, String? error)> _getSEBLPAYPaymentURL(String sessionId) async {
-    final redirectURL =
-        "https://test-southeastbank.mtf.gateway.mastercard.com/checkout/pay/$sessionId?checkoutVersion=1.0.0";
+    final redirectURL = _isDevMode
+        ? "https://test-southeastbank.mtf.gateway.mastercard.com/checkout/pay/$sessionId?checkoutVersion=1.0.0"
+        : "https://southeastbank.gateway.mastercard.com/checkout/pay/$sessionId?checkoutVersion=1.0.0";
     return (Uri.tryParse(Uri.encodeFull(redirectURL)), null);
   }
 
   static Future<(Uri? url, String? error)> _getEBLPAYPaymentURL(List<dynamic> payload) async {
-    const gateway = "https://testsecureacceptance.cybersource.com/pay";
+    final gateway = "https://${_isDevMode ? "test-" : ""}secureacceptance.cybersource.com/pay";
 
     // Initialize map to store query parameters
     final Map<String, String> mapData = {};
