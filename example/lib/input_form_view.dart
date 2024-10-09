@@ -12,7 +12,8 @@ const merchantId = String.fromEnvironment("merchant_id");
 const authKey = String.fromEnvironment("auth_key");
 
 class _InputFormViewState extends State<InputFormView> {
-  late var info = MoneybagInfo(
+  late  var info = const MoneybagInfo(
+    isDev: true,
     email: "",
     phoneNo: "",
     orderId: "MER20240424141813", //

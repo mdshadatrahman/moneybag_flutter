@@ -7,31 +7,53 @@
   "merchant_no": "0000044",
   "order_amount": 1.0,
   "merchant_logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/17045536-bc12-4281-8bf7-8e4ee25e172e.png",
-  "session_start_time": "2024-08-27 16:09:49",
-  "session_end_time": "2024-08-27 16:19:49",
+  "session_start_time": "2024-10-09 16:27:12",
+  "session_end_time": "2024-10-09 21:27:12",
   "services": {
     "banks": [
       {
         "service_name": "Visa",
         "service_no": 6001001,
+        "service_charge": 1.5,
         "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/12bf1b07-cef4-4d3b-adf4-81c049b0c1cb.png"
+      },
+      {
+        "service_name": "Amex",
+        "service_no": 6001002,
+        "service_charge": 3.0,
+        "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/e9516168-89d3-4422-bb8c-f1a91c3161c4.png"
       },
       {
         "service_name": "Master",
         "service_no": 6001003,
+        "service_charge": 1.5,
         "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/c1e82fd4-9df8-40bf-bd19-8e12f4b0b218.png"
+      },
+      {
+        "service_name": "Nexus",
+        "service_no": 6001007,
+        "service_charge": 1.5,
+        "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/b2f88cc6-242a-4b76-bd0b-a1f2722a8cf8.png"
       }
     ],
     "mfs": [
       {
         "service_name": "Nagad",
         "service_no": 6001005,
+        "service_charge": 1.8,
         "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/d48d431a-51a2-4542-881b-a116ae6630c6.png"
       },
       {
         "service_name": "Bkash",
         "service_no": 6001006,
+        "service_charge": 1.5,
         "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/4250ceab-22ff-4566-8797-4b3e5dad6181.png"
+      },
+      {
+        "service_name": "Rocket",
+        "service_no": 6001008,
+        "service_charge": 1.5,
+        "logo": "https://dev-api.moneybag.com.bd/api/v1/uploads/uploads/get/1f90a0ed-c96d-4931-bb7f-29251587dcc3.png"
       }
     ]
   }

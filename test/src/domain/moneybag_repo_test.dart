@@ -6,6 +6,7 @@ void main() {
   const authKey = String.fromEnvironment("auth_key");
 
   const info = MoneybagInfo(
+    isDev: true,
     email: "test@gmail.com",
     phoneNo: "01715469898",
     orderId: "MER20240424141813", //

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:moneybag/src/domain/seassion_info.dart';
+import 'package:moneybag/src/domain/session_info.dart';
 
 import '../../fixture/fixture.dart';
 
@@ -11,7 +11,7 @@ void main() {
 
     final sessionInfo = SessionInfo.fromMap(jsonDecode(data));
     expect(sessionInfo, isA<SessionInfo>());
-    expect(sessionInfo.banks.length, 2);
-    expect(sessionInfo.mfs.length, 2);
+    expect(sessionInfo.banks.length, 4);
+    expect(sessionInfo.mfs.length, 3);
   });
 }

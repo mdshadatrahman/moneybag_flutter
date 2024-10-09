@@ -14,7 +14,7 @@ class SessionInfo {
     required this.banks,
     required this.mfs,
   });
-
+  
   final String currency;
   final String orderId;
   final String returnUrl;

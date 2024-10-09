@@ -4,7 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../domain/moneybag_repo.dart';
 import '../domain/payment_method_success_pattern_mixin.dart';
 import '../domain/provider_payload.dart';
-import '../domain/seassion_info.dart';
+import '../domain/session_info.dart';
 import '../domain/service_charge_response.dart';
 
 class PaymentWebviewPage extends StatefulWidget {
