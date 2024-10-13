@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:moneybag/src/domain/moneybag_response.dart';
+import 'package:moneybag_flutter/src/domain/moneybag_response.dart';
 
 import '../../fixture/fixture.dart';
 

@@ -9,10 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
   flutter_dotenv: any
 
-  moneybag:
+  moneybag_flutter:
     path: ../
 
 dev_dependencies:

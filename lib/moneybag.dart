@@ -1,4 +1,4 @@
-library moneybag;
+library moneybag_flutter;
 
 export 'src/models/moneybag_param.dart';
 export 'src/models/moneybag_theme.dart';

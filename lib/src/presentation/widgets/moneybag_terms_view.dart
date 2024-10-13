@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:moneybag/src/domain/moneybag_help_mixin.dart';
+import 'package:moneybag_flutter/src/domain/moneybag_help_mixin.dart';
 
 import '../../../moneybag.dart';
 

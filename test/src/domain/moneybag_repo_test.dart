@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:moneybag/moneybag.dart';
+import 'package:moneybag_flutter/moneybag.dart';
 
 void main() {
   const merchantId = String.fromEnvironment("merchant_id", );
