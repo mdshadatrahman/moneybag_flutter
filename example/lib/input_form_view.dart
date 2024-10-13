@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneybag/moneybag.dart';
+import 'package:moneybag_flutter/moneybag.dart';
 
 class InputFormView extends StatefulWidget {
   const InputFormView({super.key});

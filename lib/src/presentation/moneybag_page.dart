@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:moneybag/src/presentation/widgets/session_failure_view.dart';
+import 'package:moneybag_flutter/src/presentation/widgets/session_failure_view.dart';
 import '../../moneybag.dart';
 import '../domain/moneybag_response.dart';
 import 'widgets/loading_view.dart';
