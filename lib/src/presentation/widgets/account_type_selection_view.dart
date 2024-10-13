@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../moneybag.dart';
-import '../../domain/seassion_info.dart';
+import '../../domain/session_info.dart';
 
 /// callback for [AccountTypeSelectionView]
 typedef OnAccountTypeChanged = void Function(MoneybagServiceInfo? paymentMethod);

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../moneybag.dart';
-import 'domain/seassion_info.dart';
+import 'domain/session_info.dart';
 
+@Deprecated("this will be removed on release, use [MoneybagInheritedWidget.of(context)]")
 extension MoneybagInheritedWidgetExtension on BuildContext {
   MoneybagInheritedWidget get moneybag => MoneybagInheritedWidget.of(this);
 

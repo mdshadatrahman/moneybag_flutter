@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../moneybag.dart';
 import '../../domain/moneybag_response.dart';
-import '../../domain/seassion_info.dart';
+import '../../domain/session_info.dart';
 import '../../domain/service_charge_response.dart';
 import 'account_type_selection_view.dart';
 import 'expire_view.dart';

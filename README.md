@@ -39,10 +39,11 @@ For iOS, ensure your Info.plist allows arbitrary loads:
 longer examples to the `/example` folder.
 
 ```dart
-const merchantId = String.fromEnvironment("merchant_id");
+const merchantId = String.fromEnvironment("merchant_id");// the your secret keys 
 const authKey = String.fromEnvironment("auth_key");
 
 const info = MoneybagInfo(
+    isDev: true, // use false for production
     email: "test@gmail.com",
     phoneNo: "017xxxxxxxx",
     orderId: "MER2024xxxx1813", //

@@ -20,6 +20,7 @@ import 'dart:convert';
 class MoneybagInfo {
   /// constructor for [MoneybagInfo] for payment
   const MoneybagInfo({
+    required this.isDev,
     required this.merchantID,
     required this.authKey,
     required this.orderId,
@@ -30,6 +31,10 @@ class MoneybagInfo {
     this.email,
     this.phoneNo,
   });
+
+  /// whether the it will be for production or dev
+  /// true -> development
+  final bool isDev;
 
   /// unique identifier for the merchant
   final String merchantID;
@@ -81,6 +86,7 @@ class MoneybagInfo {
   String toJson() => json.encode(toMap());
 
   MoneybagInfo copyWith({
+    bool? isDev,
     String? merchantID,
     String? authKey,
     String? orderId,
@@ -92,6 +98,7 @@ class MoneybagInfo {
     String? phoneNo,
   }) {
     return MoneybagInfo(
+      isDev: isDev ?? this.isDev,
       merchantID: merchantID ?? this.merchantID,
       authKey: authKey ?? this.authKey,
       orderId: orderId ?? this.orderId,

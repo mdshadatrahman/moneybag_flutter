@@ -4,16 +4,26 @@ import 'package:http/http.dart' as http;
 
 import '../../moneybag.dart';
 import 'moneybag_response.dart';
-import 'seassion_info.dart';
+import 'session_info.dart';
 import 'service_charge_response.dart';
 
 class MoneybagRepository {
-  static const String _base = "https://dev-api.moneybag.com.bd/api/v1";
-  static const String _sessionCreateUrl = "$_base/sessions/create-session";
+  ///
+  @Deprecated("Refactor the static method to methods")
+  static bool _isDevMode = true;
+
+  static final Uri _baseUri = Uri(
+    scheme: "https",
+    host: "${_isDevMode ? "dev-" : ""}api.moneybag.com.bd",
+    path: "/api/v1/",
+  );
+
+  static Uri _mergeUriPath(String path) => _baseUri.replace(path: "${_baseUri.path}$path");
 
   static Future<MoneybagResponse> createSession(MoneybagInfo moneybagInfo) async {
     try {
-      final uri = Uri.parse(_sessionCreateUrl);
+      final uri = _mergeUriPath("sessions/create-session");
+      _isDevMode = moneybagInfo.isDev;
 
       final response = await http.post(
         uri,
@@ -38,14 +48,20 @@ class MoneybagRepository {
   ///  return null if expired or exception
   static Future<SessionInfo?> sessionInfo(String sessionId) async {
     try {
-      final uri = Uri.parse("$_base/sessions/whoami?sessionId=$sessionId");
+      final uri = _baseUri.replace(
+        path: "${_baseUri.path}sessions/whoami",
+        query: "sessionId=$sessionId",
+      );
+
       final response = await http.get(uri);
       final data = jsonDecode(response.body);
       if (data['status_code'] == 403) {
         debugPrint(data['details'].toString());
         return null;
       }
-      return SessionInfo.fromMap(data);
+      final sInfo = SessionInfo.fromMap(data);
+      debugPrint("session info ${sInfo.toString()}");
+      return sInfo;
     } catch (e) {
       debugPrint("Error: sessionInfo $e");
       return null;
@@ -59,7 +75,7 @@ class MoneybagRepository {
     required String serviceNo,
   }) async {
     try {
-      final uri = Uri.parse("$_base/lookups/service-charge/");
+      final uri = _mergeUriPath("/lookups/service-charge/");
       final response = await http.post(
         uri,
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
@@ -70,6 +86,7 @@ class MoneybagRepository {
           "service_no": serviceNo,
         }),
       );
+
       return ServiceChargeResponse.fromMap(jsonDecode(response.body));
     } catch (e) {
       debugPrint("Error: serviceCharge $e");
@@ -81,7 +98,7 @@ class MoneybagRepository {
   /// return null if expired or exception
   static Future<(Uri? uri, String? error)> getProvider(ProviderPayload payload) async {
     try {
-      final uri = Uri.parse("$_base/gw-provider/get-pg");
+      final uri = _mergeUriPath("/gw-provider/get-pg");
 
       final response = await http.post(
         uri,
@@ -93,7 +110,7 @@ class MoneybagRepository {
       if (data['status'] == false) {
         return (null, data['message']?.toString() ?? "Something went wrong");
       }
-      print("response ${data}");
+
       if (data['status'] == "SUCCESS") {
         final getWay = data['data']['gateway'];
 
@@ -127,12 +144,14 @@ class MoneybagRepository {
   }
 
   static Future<(Uri? url, String? error)> _getSEBLPAYPaymentURL(String sessionId) async {
-    final redirectURL = "https://test-southeastbank.mtf.gateway.mastercard.com/checkout/pay/$sessionId";
+    final redirectURL = _isDevMode
+        ? "https://test-southeastbank.mtf.gateway.mastercard.com/checkout/pay/$sessionId?checkoutVersion=1.0.0"
+        : "https://southeastbank.gateway.mastercard.com/checkout/pay/$sessionId?checkoutVersion=1.0.0";
     return (Uri.tryParse(Uri.encodeFull(redirectURL)), null);
   }
 
   static Future<(Uri? url, String? error)> _getEBLPAYPaymentURL(List<dynamic> payload) async {
-    const gateway = "https://testsecureacceptance.cybersource.com/pay";
+    final gateway = "https://${_isDevMode ? "test-" : ""}secureacceptance.cybersource.com/pay";
 
     // Initialize map to store query parameters
     final Map<String, String> mapData = {};
