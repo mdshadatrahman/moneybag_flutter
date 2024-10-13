@@ -5,6 +5,10 @@ maintainer: Mark O'Sullivan (@yeasin50)
 homepage: https://moneybag.com.bd
 repository: https://github.com/fitl-com-bd/moneybag_flutter_sdk
 
+platforms:
+  android:
+  ios:
+
 environment:
   sdk: ">=3.4.0 <4.0.0"
   flutter: ">=1.17.0"
