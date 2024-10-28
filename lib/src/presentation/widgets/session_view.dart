@@ -69,6 +69,7 @@ class _MoneyBagSessionViewState extends State<MoneyBagSessionView> {
       description: widget.moneyBag.description,
       merchantNo: merchantNo,
       serviceNo: paymentMethod.serviceNo.toString(),
+      isDev: widget.moneyBag.isDev,
     );
 
     setState(() {});
@@ -79,6 +80,7 @@ class _MoneyBagSessionViewState extends State<MoneyBagSessionView> {
       serviceCharge: serviceCharge!,
       sessionInfo: session,
       selectedMethod: selectedMethod!,
+      isDev: widget.moneyBag.isDev,
     );
     final onCompleteResult = await Navigator.of(context).push(route);
     print("isSuccess $onCompleteResult");
@@ -96,6 +98,7 @@ class _MoneyBagSessionViewState extends State<MoneyBagSessionView> {
     return _SessionInfoLoader(
         theme: widget.theme,
         sessionId: widget.session.sessionId,
+        isDev: widget.moneyBag.isDev,
         builder: (BuildContext context, SessionInfo sessionInfo) {
           return MoneybagInheritedWidget(
             moneyBag: widget.moneyBag,
@@ -153,7 +156,9 @@ class _SessionInfoLoader extends StatefulWidget {
     required this.builder,
     required this.sessionId,
     required this.theme,
+    required this.isDev,
   });
+  final bool isDev;
   final String sessionId;
   final Widget Function(BuildContext context, SessionInfo sessionInfo) builder;
 
@@ -164,7 +169,10 @@ class _SessionInfoLoader extends StatefulWidget {
 }
 
 class _SessionInfoLoaderState extends State<_SessionInfoLoader> {
-  late final future = MoneybagRepository.sessionInfo(widget.sessionId);
+  late final future = MoneybagRepository.sessionInfo(
+    widget.sessionId,
+    isDev: widget.isDev,
+  );
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<SessionInfo?>(
