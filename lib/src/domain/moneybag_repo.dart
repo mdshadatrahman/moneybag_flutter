@@ -8,22 +8,13 @@ import 'session_info.dart';
 import 'service_charge_response.dart';
 
 class MoneybagRepository {
-  ///
-  @Deprecated("Refactor the static method to methods")
-  static bool _isDevMode = true;
-
-  static final Uri _baseUri = Uri(
-    scheme: "https",
-    host: "${_isDevMode ? "dev-" : ""}api.moneybag.com.bd",
-    path: "/api/v1/",
-  );
-
-  static Uri _mergeUriPath(String path) => _baseUri.replace(path: "${_baseUri.path}$path");
-
-  static Future<MoneybagResponse> createSession(MoneybagInfo moneybagInfo) async {
+  static Future<MoneybagResponse> createSession(MoneybagInfo moneybagInfo, {required bool isDev}) async {
     try {
-      final uri = _mergeUriPath("sessions/create-session");
-      _isDevMode = moneybagInfo.isDev;
+      Uri uri = Uri(
+        scheme: "https",
+        host: "${isDev ? "dev-" : ""}api.moneybag.com.bd",
+        path: "/api/v1/sessions/create-session",
+      );
 
       final response = await http.post(
         uri,
@@ -46,10 +37,12 @@ class MoneybagRepository {
   }
 
   ///  return null if expired or exception
-  static Future<SessionInfo?> sessionInfo(String sessionId) async {
+  static Future<SessionInfo?> sessionInfo(String sessionId, {required bool isDev}) async {
     try {
-      final uri = _baseUri.replace(
-        path: "${_baseUri.path}sessions/whoami",
+      Uri uri = Uri(
+        scheme: "https",
+        host: "${isDev ? "dev-" : ""}api.moneybag.com.bd",
+        path: "/api/v1/sessions/whoami",
         query: "sessionId=$sessionId",
       );
 
@@ -73,9 +66,15 @@ class MoneybagRepository {
     required String description,
     required String merchantNo,
     required String serviceNo,
+    required bool isDev,
   }) async {
     try {
-      final uri = _mergeUriPath("/lookups/service-charge/");
+      Uri uri = Uri(
+        scheme: "https",
+        host: "${isDev ? "dev-" : ""}api.moneybag.com.bd",
+        path: "/api/v1/lookups/service-charge/",
+      );
+
       final response = await http.post(
         uri,
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
@@ -96,9 +95,16 @@ class MoneybagRepository {
 
   /// return provider url,
   /// return null if expired or exception
-  static Future<(Uri? uri, String? error)> getProvider(ProviderPayload payload) async {
+  static Future<(Uri? uri, String? error)> getProvider(
+    ProviderPayload payload, {
+    required bool isDev,
+  }) async {
     try {
-      final uri = _mergeUriPath("/gw-provider/get-pg");
+      Uri uri = Uri(
+        scheme: "https",
+        host: "${isDev ? "dev-" : ""}api.moneybag.com.bd",
+        path: "/api/v1/gw-provider/get-pg",
+      );
 
       final response = await http.post(
         uri,
@@ -115,7 +121,7 @@ class MoneybagRepository {
         final getWay = data['data']['gateway'];
 
         if (getWay == "EBLPAY") {
-          return await _getEBLPAYPaymentURL(data['data']['ebl_checkout_payload']);
+          return await _getEBLPAYPaymentURL(data['data']['ebl_checkout_payload'], isDev: isDev);
         }
         if (getWay == 'SEBLPAY') {
           final sessionId = data['data']['sebl_session_id'];
@@ -123,7 +129,7 @@ class MoneybagRepository {
             return (null, "Failed to get bank session");
           }
 
-          final result = await _getSEBLPAYPaymentURL(sessionId);
+          final result = await _getSEBLPAYPaymentURL(sessionId, isDev: isDev);
           return result;
         }
 
@@ -143,15 +149,15 @@ class MoneybagRepository {
     }
   }
 
-  static Future<(Uri? url, String? error)> _getSEBLPAYPaymentURL(String sessionId) async {
-    final redirectURL = _isDevMode
+  static Future<(Uri? url, String? error)> _getSEBLPAYPaymentURL(String sessionId, {required bool isDev}) async {
+    final redirectURL = isDev
         ? "https://test-southeastbank.mtf.gateway.mastercard.com/checkout/pay/$sessionId?checkoutVersion=1.0.0"
         : "https://southeastbank.gateway.mastercard.com/checkout/pay/$sessionId?checkoutVersion=1.0.0";
     return (Uri.tryParse(Uri.encodeFull(redirectURL)), null);
   }
 
-  static Future<(Uri? url, String? error)> _getEBLPAYPaymentURL(List<dynamic> payload) async {
-    final gateway = "https://${_isDevMode ? "test-" : ""}secureacceptance.cybersource.com/pay";
+  static Future<(Uri? url, String? error)> _getEBLPAYPaymentURL(List<dynamic> payload, {required bool isDev}) async {
+    final gateway = "https://${isDev ? "test-" : ""}secureacceptance.cybersource.com/pay";
 
     // Initialize map to store query parameters
     final Map<String, String> mapData = {};

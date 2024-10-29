@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:moneybag_flutter/src/presentation/widgets/session_failure_view.dart';
@@ -40,6 +42,7 @@ class MoneybagPage extends StatefulWidget {
   final MoneybagInfo moneybagInfo;
 
   static MaterialPageRoute route({required MoneybagInfo moneybagInfo, MoneybagTheme? theme}) {
+    HttpOverrides.global = _MyHttpOverrides();
     return MaterialPageRoute(
       builder: (context) => MoneybagPage._(
         moneybagInfo: moneybagInfo,
@@ -53,7 +56,8 @@ class MoneybagPage extends StatefulWidget {
 }
 
 class _MoneybagPageState extends State<MoneybagPage> {
-  late Future<MoneybagResponse> future = MoneybagRepository.createSession(widget.moneybagInfo);
+  late Future<MoneybagResponse> future =
+      MoneybagRepository.createSession(widget.moneybagInfo, isDev: widget.moneybagInfo.isDev);
 
   @override
   Widget build(BuildContext context) {
@@ -109,5 +113,13 @@ class _MoneybagPageState extends State<MoneybagPage> {
         ),
       ),
     );
+  }
+}
+
+class _MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }

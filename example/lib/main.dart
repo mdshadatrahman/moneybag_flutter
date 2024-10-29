@@ -21,7 +21,7 @@ class MainApp extends StatelessWidget {
         const authKey = String.fromEnvironment("auth_key");
 
         const info = MoneybagInfo(
-          isDev: true,
+          isDev: false,
           email: "test@gmail.com",
           phoneNo: "01715469898",
           merchantID: merchantId, // "YOUR_MERCHANT_ID",

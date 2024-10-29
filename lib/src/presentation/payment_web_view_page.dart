@@ -9,6 +9,7 @@ import '../domain/service_charge_response.dart';
 
 class PaymentWebviewPage extends StatefulWidget {
   const PaymentWebviewPage._({
+    required this.isDev,
     required this.sessionInfo,
     required this.serviceCharge,
     required this.selectedMethod,
@@ -18,12 +19,14 @@ class PaymentWebviewPage extends StatefulWidget {
     required SessionInfo sessionInfo,
     required ServiceChargeResponse serviceCharge,
     required MoneybagServiceInfo selectedMethod,
+    required bool isDev,
   }) {
     return MaterialPageRoute(
       builder: (context) => PaymentWebviewPage._(
         serviceCharge: serviceCharge,
         sessionInfo: sessionInfo,
         selectedMethod: selectedMethod,
+        isDev: isDev,
       ),
     );
   }
@@ -31,6 +34,7 @@ class PaymentWebviewPage extends StatefulWidget {
   final SessionInfo sessionInfo;
   final ServiceChargeResponse serviceCharge;
   final MoneybagServiceInfo selectedMethod;
+  final bool isDev;
 
   @override
   State<PaymentWebviewPage> createState() => _PaymentWebviewPageState();
@@ -48,7 +52,7 @@ class _PaymentWebviewPageState extends State<PaymentWebviewPage> {
     orderId: widget.sessionInfo.orderId,
   );
 
-  late Future<(Uri? url, String? error)> providerFuture = MoneybagRepository.getProvider(payload);
+  late Future<(Uri? url, String? error)> providerFuture = MoneybagRepository.getProvider(payload, isDev: widget.isDev);
 
   @override
   Widget build(BuildContext context) {
